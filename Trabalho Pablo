@@ -1,0 +1,77 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class trabalhoestrutura {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Informe o tamanho do vetor: ");
+        int size = scanner.nextInt();
+        int[] vetor = new int[size];
+
+        System.out.println("Coloque os elementos do vetor:");
+        for (int i = 0; i < size; i++) {
+            vetor[i] = scanner.nextInt();
+        }
+
+        System.out.println("Vetor normal: " + Arrays.toString(vetor));
+
+        System.out.println("Escolha o método de ordenação:");
+        System.out.println("1-Inserção");
+        System.out.println("2-Seleção");
+        System.out.println("3-Bolha");
+        int escolher = scanner.nextInt();
+
+        long startTime = System.nanoTime();
+        switch (escolher) {
+            case 1 -> Insercao(vetor);
+            case 2 -> Selecao(vetor);
+            case 3 -> Bolha(vetor);
+            default -> {
+                System.out.println("Opção errada!");
+                return;
+            }
+        }
+        long endTime = System.nanoTime();
+
+        System.out.println("Vetor ordenado: " + Arrays.toString(vetor));
+        System.out.println("Tempo para a execução: " + (endTime - startTime) + " nanosegundos");
+    }
+
+    public static void Insercao(int[] vetor) {
+        for (int i = 1; i < vetor.length; i++) {
+            int atual = vetor[i];
+            int j = i - 1;
+            while (j >= 0 && vetor[j] > atual) {
+                vetor[j + 1] = vetor[j];
+                j--;
+            }
+            vetor[j + 1] = atual;
+        }
+    }
+
+    public static void Selecao(int[] vetor) {
+        for (int i = 0; i < vetor.length - 1; i++) {
+            int minimo = i;
+            for (int j = i + 1; j < vetor.length; j++) {
+                if (vetor[j] < vetor[minimo]) {
+                    minimo = j;
+                }
+            }
+            int temp = vetor[minimo];
+            vetor[minimo] = vetor[i];
+            vetor[i] = temp;
+        }
+    }
+
+    public static void Bolha(int[] vetor) {
+        for (int i = 0; i < vetor.length - 1; i++) {
+            for (int j = 0; j < vetor.length - i - 1; j++) {
+                if (vetor[j] > vetor[j + 1]) {
+                    int temp = vetor[j];
+                    vetor[j] = vetor[j + 1];
+                    vetor[j + 1] = temp;
+                }
+            }
+        }
+    }
+}
